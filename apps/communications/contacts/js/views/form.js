@@ -344,6 +344,8 @@ contacts.Form = (function() {
       renderTemplate(field, contact[field]);
     });
 
+    newFormDesignForEdit(company.value);
+
     deleteContactButton.onclick = function deleteClicked(event) {
       var msg = 'deleteConfirmMsg';
       var yesObject = {
@@ -404,6 +406,7 @@ contacts.Form = (function() {
     });
 
     checkDisableButton();
+    newFormDesignForAdd();
   };
 
 
@@ -580,10 +583,14 @@ contacts.Form = (function() {
     }
 
     // The remove button should not appear on FB disabled fields
-    if (!rendered.classList.contains(FB_CLASS)) {
-      var removeEl = removeFieldIcon(rendered.id, type);
-      rendered.insertBefore(removeEl, rendered.firstChild);
-    }
+    // if (!rendered.classList.contains(FB_CLASS)) {
+    //   var removeEl = removeFieldIcon(rendered.id, type);
+    //   rendered.insertBefore(removeEl, rendered.firstChild);
+    // }
+
+    // Add Details listener
+    var addDetails = document.getElementById('add-details');
+    addDetails.addEventListener('click', onGoToAddDetails);
 
     // Add event listeners
     var boxTitle = rendered.querySelector('legend.action');
@@ -605,6 +612,12 @@ contacts.Form = (function() {
     if (type === 'date') {
       checkAddDateButton();
     }
+  };
+
+  var onGoToAddDetails = function onGoToAddDetails(evt) {
+    evt.preventDefault();
+    Contacts.goToAddDetails(evt);
+    return false;
   };
 
   var onGoToSelectTag = function onGoToSelectTag(evt) {
@@ -1472,6 +1485,25 @@ contacts.Form = (function() {
     };
   }
 
+  //
+  // Add Contact : New form as per UX.
+  //
+  function newFormDesignForAdd(){
+    //Todo's
+    // img-delete-button hide
+    // field-template remove class
+    // Resize field set
+    document.querySelector('.companyNameHidden').hidden = true;
+    document.querySelector('#add-new-phone').hidden = true;
+  }
+
+  function newFormDesignForEdit(companyName){
+    document.querySelector('#add-new-phone').hidden = true;
+    document.querySelector('.companyNameHidden').hidden = false;
+    if(companyName.length<1){
+      document.querySelector('.companyNameHidden').hidden = true;
+    }
+  }
   return {
     'init': init,
     'render': render,

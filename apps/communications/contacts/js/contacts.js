@@ -72,7 +72,9 @@ var Contacts = (function() {
   var contactsDetails;
   var contactsForm;
 
-  var customTag, customTagReset, tagDone, tagHeader, lazyLoadedTagsDom = false;
+  var customTag, customTagReset,tagDone,tagHeader, tagAddDetails;
+  var lazyLoadedTagsDom = false,lazyLoadedDetailsDom;
+  var boxTitleTags=[];
 
   // Shows the edit form for the current contact being in an update activity
   // It receives an array of two elements with the facebook data && values
@@ -484,6 +486,37 @@ var Contacts = (function() {
     }
   }
 
+  function showDetails() {
+    navigation.go('add-details-view', 'right-left');
+    if (!tagAddDetails) {
+      tagAddDetails = document.querySelector('#add-details-header');
+      tagAddDetails.addEventListener('action', handleBack);
+    }
+    var boxTitle = document.querySelectorAll('li.action');
+    for(var i=0; i<boxTitle.length; i++) {
+      if (!boxTitleTags[i]) {
+        boxTitle[i].addEventListener('click', goToSelectTag);
+        boxTitleTags[i] = true;
+      }
+    }
+    if (document.activeElement) {
+      document.activeElement.blur();
+    }
+  }
+
+  var goToAddDetails = function goToAddDetails(event) {
+    var tagViewElement = document.getElementById('add-details-view');
+    if (!lazyLoadedDetailsDom) {
+      LazyLoader.load(tagViewElement, function() {
+        lazyLoadedDetailsDom = true;
+        showDetails();
+      });
+    }
+    else {
+        showDetails();
+    }
+  };
+
   var goToSelectTag = function goToSelectTag(event) {
     contactTag = event.currentTarget.children[0];
 
@@ -509,6 +542,7 @@ var Contacts = (function() {
   var handleBack = function handleBack(cb) {
     navigation.back(cb);
   };
+
 
   var handleCancel = function handleCancel() {
     //If in an activity, cancel it
@@ -1054,6 +1088,7 @@ var Contacts = (function() {
     'navigation': navigation,
     'sendEmailOrPick': sendEmailOrPick,
     'updatePhoto': updatePhoto,
+    'goToAddDetails': goToAddDetails,
     'checkCancelableActivity': checkCancelableActivity,
     'isEmpty': isEmpty,
     'getLength': getLength,
