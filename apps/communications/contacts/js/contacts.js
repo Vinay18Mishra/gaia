@@ -549,7 +549,7 @@ var Contacts = (function() {
   var showComapny = function showCompany(){
     document.querySelector('.companyNameHidden').hidden = false;
     handleBack();
-  }
+  };
 
   var handleCancel = function handleCancel() {
     //If in an activity, cancel it
@@ -564,8 +564,10 @@ var Contacts = (function() {
   var handleSelectTagDoneNewDesign = function handleSelectTagDoneNewDesign(){
     contacts.Form.onNewFieldClicked(contacts.Form.setCurrentEvent);
     var temp = contacts.Form.setCurrentElement;
-    document.getElementById(temp).setAttribute('data-value',contacts.Form.setCurrentTag.dataset.value);
-    document.getElementById(temp).setAttribute('data-l10n-id',contacts.Form.setCurrentTag.dataset.l10nId);
+    document.getElementById(temp).
+     setAttribute('data-value',contacts.Form.setCurrentTag.dataset.value);
+    document.getElementById(temp).
+     setAttribute('data-l10n-id',contacts.Form.setCurrentTag.dataset.l10nId);
     handleBack();
     handleBack();
   }
