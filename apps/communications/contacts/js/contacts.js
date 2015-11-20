@@ -519,16 +519,19 @@ var Contacts = (function() {
 
   var goToSelectTag = function goToSelectTag(event) {
     contactTag = event.currentTarget.children[0];
-
-    var tagViewElement = document.getElementById('view-select-tag');
-    if (!lazyLoadedTagsDom) {
-      LazyLoader.load(tagViewElement, function() {
+    if(contactTag.textContent==='Company'){
+      showComapny();
+    }else{
+      var tagViewElement = document.getElementById('view-select-tag');
+      if (!lazyLoadedTagsDom) {
+        LazyLoader.load(tagViewElement, function() {
+          showSelectTag();
+          lazyLoadedTagsDom = true;
+         });
+      }
+      else {
         showSelectTag();
-        lazyLoadedTagsDom = true;
-       });
-    }
-    else {
-      showSelectTag();
+      }
     }
   };
 
@@ -543,6 +546,10 @@ var Contacts = (function() {
     navigation.back(cb);
   };
 
+  var showComapny = function showCompany(){
+    document.querySelector('.companyNameHidden').hidden = false;
+    handleBack();
+  }
 
   var handleCancel = function handleCancel() {
     //If in an activity, cancel it
@@ -554,19 +561,29 @@ var Contacts = (function() {
     }
   };
 
+  var handleSelectTagDoneNewDesign = function handleSelectTagDoneNewDesign(){
+    contacts.Form.onNewFieldClicked(contacts.Form.setCurrentEvent);
+    var temp = contacts.Form.setCurrentElement;
+    document.getElementById(temp).setAttribute('data-value',contacts.Form.setCurrentTag.dataset.value);
+    document.getElementById(temp).setAttribute('data-l10n-id',contacts.Form.setCurrentTag.dataset.l10nId);
+    handleBack();
+    handleBack();
+  }
+
   var handleSelectTagDone = function handleSelectTagDone() {
-    var prevValue = contactTag.textContent;
-    ContactsTag.clickDone(function() {
-      var valueModifiedEvent = new CustomEvent('ValueModified', {
-        bubbles: true,
-        detail: {
-          prevValue: prevValue,
-          newValue: contactTag.textContent
-        }
-      });
-      contactTag.dispatchEvent(valueModifiedEvent);
-      handleBack();
-    });
+    // var prevValue = contactTag.textContent;
+    // ContactsTag.clickDone(function() {
+    //   var valueModifiedEvent = new CustomEvent('ValueModified', {
+    //     bubbles: true,
+    //     detail: {
+    //       prevValue: prevValue,
+    //       newValue: contactTag.textContent
+    //     }
+    //   });
+    //   contactTag.dispatchEvent(valueModifiedEvent);
+    //   handleBack();
+    // });
+    handleSelectTagDoneNewDesign();
   };
 
   var handleCustomTag = function handleCustomTag(ev) {

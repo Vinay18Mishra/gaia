@@ -25,6 +25,7 @@ contacts.Form = (function() {
     'note': 0
   };
 
+  var setCurrentTag, setCurrentElement, setCurrentEvent;
   var currentContact = {};
   var dom,
       contactForm,
@@ -540,6 +541,13 @@ contacts.Form = (function() {
       }
     });
     currField.i = getNextTemplateId(container);
+
+    // Change as per UX 4.3.2
+    if (type === 'tel' || type === 'email') {
+      contacts.Form.setCurrentElement = type+'_type_'+currField.i;
+    }else {
+      contacts.Form.setCurrentElement = type+'_'+currField.i;
+    }
 
     var rendered = utils.templates.render(template, currField);
     // Controlling that if no tel phone is present carrier field is disabled

@@ -45,7 +45,7 @@
       </fieldset>
     </div>
 
-    <div id='add-address-#i#' role="listitem" data-template class='address-template field-template' data-index="#i#">
+    <div id='add-address-#i#' role="listitem" data-template class='address-template' data-index="#i#">
       <fieldset class="fillflow-row">
         <section>
           <p class="setbox-item first-row">
@@ -53,7 +53,7 @@
             <button type="reset">Clear</button>
           </p>
           <div class="two_fields second-row">
-            <legend class="action" role="combobox" aria-haspopup="true" aria-labelledby="address_type_#i#">
+            <legend class="action" aria-labelledby="address_type_#i#">
               <span aria-hidden="true" data-taglist="address-type" name="adr[#i#][type]" data-value="#type_value#" id="address_type_#i#" data-field="type" data-l10n-id="#type_l10n_id#">#type#</span>
             </legend>
             <p class="setbox-item">
@@ -193,7 +193,7 @@
                 <div id="contacts-form-notes" role="list"></div>
               </section>
 
-              <button data-field-type="note" id='add-new-note' data-l10n-id="addComment" class="fillflow-row action action-add icon icon-add">
+              <button data-field-type="note" id='add-new-note' data-l10n-id="addComment" class="fillflow-row action action-add icon icon-add hide_buttons">
                 Add comment
               </button>
               <hr class="hide_buttons">
